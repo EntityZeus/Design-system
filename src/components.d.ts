@@ -20,6 +20,19 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface StencilInput {
+        /**
+          * @default 'Enter the value'
+         */
+        "label": string;
+        "max": number;
+        "min": number;
+        /**
+          * @default 'number'
+         */
+        "type": 'text' | 'number';
+        "value": string | number;
+    }
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -28,8 +41,15 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLStencilInputElement extends Components.StencilInput, HTMLStencilElement {
+    }
+    var HTMLStencilInputElement: {
+        prototype: HTMLStencilInputElement;
+        new (): HTMLStencilInputElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "stencil-input": HTMLStencilInputElement;
     }
 }
 declare namespace LocalJSX {
@@ -47,8 +67,22 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface StencilInput {
+        /**
+          * @default 'Enter the value'
+         */
+        "label"?: string;
+        "max"?: number;
+        "min"?: number;
+        /**
+          * @default 'number'
+         */
+        "type"?: 'text' | 'number';
+        "value"?: string | number;
+    }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "stencil-input": StencilInput;
     }
 }
 export { LocalJSX as JSX };
@@ -56,6 +90,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "stencil-input": LocalJSX.StencilInput & JSXBase.HTMLAttributes<HTMLStencilInputElement>;
         }
     }
 }
