@@ -19,6 +19,11 @@ export class StencilInputElement {
     this.internals.setFormValue('');
   }
 
+  formResetCallback() {
+    this.internals.setFormValue('');
+    this.internals.setValidity({});
+  }
+
   handleInput(event){
     const target = event.target;
     this.value = target.value;

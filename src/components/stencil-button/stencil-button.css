@@ -1,0 +1,41 @@
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-family: 'Open Sans';
+  cursor: pointer;
+  color: #242526;
+  .disabled,
+  [disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &.primary {
+    background: #1C4D8D;
+    color: #ffff;
+    transition: 0.3s ease;
+    &:hover {
+      background: #0F2854;
+    }
+  }
+
+  &.error {
+    background: #DC0000;
+    color: #ffff;
+    transition: 0.3s ease;
+    &:hover {
+      background: #FF3838;
+    }
+  }
+
+  &.outline {
+    background: transparent;
+    border: 1px solid #0F2854;
+    color: #242526;
+    transition: 0.3s ease;
+    &:hover {
+      background: #F4F4F4;
+    }
+  }
+}

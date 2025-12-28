@@ -6,6 +6,17 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface StencilButton {
+        "buttonLabel": string;
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * @default 'primary'
+         */
+        "state": 'primary' | 'error' | 'outline';
+    }
     interface StencilInput {
         /**
           * @default 'Enter the value'
@@ -20,7 +31,28 @@ export namespace Components {
         "value": string | number;
     }
 }
+export interface StencilButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLStencilButtonElement;
+}
 declare global {
+    interface HTMLStencilButtonElementEventMap {
+        "click": void;
+    }
+    interface HTMLStencilButtonElement extends Components.StencilButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLStencilButtonElementEventMap>(type: K, listener: (this: HTMLStencilButtonElement, ev: StencilButtonCustomEvent<HTMLStencilButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLStencilButtonElementEventMap>(type: K, listener: (this: HTMLStencilButtonElement, ev: StencilButtonCustomEvent<HTMLStencilButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLStencilButtonElement: {
+        prototype: HTMLStencilButtonElement;
+        new (): HTMLStencilButtonElement;
+    };
     interface HTMLStencilInputElement extends Components.StencilInput, HTMLStencilElement {
     }
     var HTMLStencilInputElement: {
@@ -28,10 +60,23 @@ declare global {
         new (): HTMLStencilInputElement;
     };
     interface HTMLElementTagNameMap {
+        "stencil-button": HTMLStencilButtonElement;
         "stencil-input": HTMLStencilInputElement;
     }
 }
 declare namespace LocalJSX {
+    interface StencilButton {
+        "buttonLabel"?: string;
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        "onClick"?: (event: StencilButtonCustomEvent<void>) => void;
+        /**
+          * @default 'primary'
+         */
+        "state"?: 'primary' | 'error' | 'outline';
+    }
     interface StencilInput {
         /**
           * @default 'Enter the value'
@@ -46,6 +91,7 @@ declare namespace LocalJSX {
         "value"?: string | number;
     }
     interface IntrinsicElements {
+        "stencil-button": StencilButton;
         "stencil-input": StencilInput;
     }
 }
@@ -53,6 +99,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "stencil-button": LocalJSX.StencilButton & JSXBase.HTMLAttributes<HTMLStencilButtonElement>;
             "stencil-input": LocalJSX.StencilInput & JSXBase.HTMLAttributes<HTMLStencilInputElement>;
         }
     }
